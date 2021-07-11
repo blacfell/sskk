@@ -2,34 +2,17 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#include "main.h"
+#include "input.h"
+
 //DEFINITIONS
-//this is a struct containing every thing in the game.
-struct Objects {
-    const char *name; //short name
-    const char *desc; //description
-    const char *symbol; //tui representation
-    int xpos; //x position. set to 0 if n/a
-    int ypos; //y position. set to 0 if n/a
-    struct Objects *loc; //struct of item's location
-                         //can be set to non-places to imply possession.
-} objs[] = {
+struct Objects objs[] = {
 {"you", "the kitty reading this :flushed:", "@", 0, 0, &objs[1]},
 {"start", "the Beginning", NULL, 0, 0, NULL},
 };
 
-//PROTOTYPES
-void draw_object(struct Objects *obj);
-static void initialise(void);
-
-//DRAWING
-//draw character from Objects array
-void draw_object(struct Objects *obj) {
-    mvprintw(obj->ypos, obj->xpos, obj->symbol);
-}
-
-//THE BEGINNING
 //get everything set up
-static void initialise(void) {
+void initialise(void) {
     initscr(); //initialise ncurses screen
     raw(); //let us use C-c and others
     noecho(); //don't write keys to the screen
@@ -38,9 +21,18 @@ static void initialise(void) {
     keypad(stdscr, TRUE); //allow use of the 'keypad' (like arrow keys and shit)
 }
 
+//say Goodbye to stdscr
+void exit_game(int code) {
+    endwin();
+    exit(code);
+}
+
 int main(void) {
     initialise();
     while (1) {
-
+        refresh();
+        get_input();
     }
+    exit_game(0);
+    exit(EXIT_SUCCESS); //exit_game does this also but this is here to be safe
 }
