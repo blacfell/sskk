@@ -3,7 +3,8 @@
 struct Objects {
     const char *name; //short name
     const char *desc; //description
-    const char *symbol; //tui representation
+    char *symbol; //tui representation
+    char *floor; //whatever is under the object
     int xpos; //x position. set to 0 if n/a
     int ypos; //y position. set to 0 if n/a
     struct Objects *loc; //struct of item's location

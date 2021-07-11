@@ -7,8 +7,8 @@
 
 //DEFINITIONS
 struct Objects objs[] = {
-{"you", "the kitty reading this :flushed:", "@", 0, 0, &objs[1]},
-{"start", "the Beginning", NULL, 0, 0, NULL},
+{"you", "the kitty reading this :flushed:", "@", NULL, 0, 0, &objs[1]},
+{"start", "the Beginning", NULL, NULL, 0, 0, NULL},
 };
 
 //get everything set up
