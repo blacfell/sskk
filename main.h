@@ -1,5 +1,7 @@
 #pragma once
 
+#define NULLSTR "\0"
+
 struct Objects {
     const char *name; //short name
     const char *desc; //description

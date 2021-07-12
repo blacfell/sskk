@@ -7,7 +7,7 @@
 //move an Object with an x and y location
 void move_object(struct Objects *object, int x, int y) {
     //return if there is no symbol to move or no floor
-    if (strcmp(NULL, object->symbol) || strcmp(NULL, object->floor)) {
+    if (strcmp(NULLSTR, object->symbol) || strcmp(NULLSTR, object->floor)) {
         return;
     }
     
