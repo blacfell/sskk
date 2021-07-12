@@ -7,7 +7,8 @@ OBJECTS = $(SOURCES:.c=.o)
 TARGET = sskk
 
 $(TARGET) : $(OBJECTS)
-		$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	gzip -k $(TARGET).6
 
 .PHONY: clean
 clean:
@@ -18,7 +19,6 @@ clean:
 install: $(TARGET)
 	mkdir -p $(PREFIX)/bin
 	cp $< $(PREFIX)/bin/$(TARGET)
-	gzip -k $(TARGET).6
 	cp $(TARGET).6.gz $(MANDIR)/man6
 
 .PHONY: uninstall

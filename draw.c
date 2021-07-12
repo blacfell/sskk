@@ -14,7 +14,8 @@ void move_object(struct Objects *object, int x, int y) {
     //draw the floor over current position
     mvprintw(object->ypos, object->xpos, object->floor);
     //put new floor into variable
-    object->floor = strcat(mvinch(y, x), "\0");
+    char current_floor = mvinch(y, x);
+    object->floor = strcat(&current_floor, "\0");
     //draw object on new location
     mvprintw(y, x, object->symbol);
 }
