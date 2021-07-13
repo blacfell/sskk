@@ -2,7 +2,10 @@
 
 #define NULLSTR "\0"
 
-struct Objects {
+#define PLAYER objs[0]
+#define START objs[1]
+
+typedef struct Objects {
     const char *name; //short name
     const char *desc; //description
     char *symbol; //tui representation
@@ -11,9 +14,9 @@ struct Objects {
     int ypos; //y position. set to 0 if n/a
     struct Objects *loc; //struct of item's location
                          //can be set to non-places to imply possession
-};
+} OBJ;
 
-extern struct Objects objs[];
+extern OBJ objs[];
 
 void initialise(void);
 void exit_game(int code);

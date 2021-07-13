@@ -1,6 +1,6 @@
 PREFIX = /usr
 MANDIR = /usr/share/man
-CFLAGS = -Wall -Wextra -Wpedantic
+CFLAGS = -Wall -Wextra -Wpedantic -g
 LDFLAGS = -lncurses
 SOURCES = $(wildcard *.c)
 OBJECTS = $(SOURCES:.c=.o)
@@ -8,7 +8,7 @@ TARGET = sskk
 
 $(TARGET) : $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-	gzip -k $(TARGET).6
+	gzip -kf $(TARGET).6
 
 .PHONY: clean
 clean:
