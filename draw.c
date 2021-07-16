@@ -9,19 +9,14 @@ void move_object(OBJ *object, int x, int y) {
     //return if there is no symbol to move or no floor
     if (strncmp(NULLSTR, object->symbol, 1) == 0 || 
             strncmp(NULLSTR, object->floor, 1) == 0) {
-        mvprintw(5, 0, "%d", strncmp(NULLSTR, object->symbol, 1));
-        mvprintw(6, 0, "%d", strncmp(NULLSTR, object->floor, 1));
-        mvprintw(8, 0, "'%s'", object->floor);
         return;
     }
     
     //draw the floor over current position
     mvprintw(object->ypos, object->xpos, object->floor);
     //put new floor into variable
-    //char nfl[2];
-    //mvinnstr(y, x, nfl, 1);
-    //mvprintw(7, 0, "'%s''%s'", nfl, object->floor);
-    //object->floor = nfl;
+    char new_floor = mvinch(y, x) & A_CHARTEXT;
+    object->floor[0] = new_floor;
     //draw object on new location
     mvprintw(y, x, object->symbol);
 

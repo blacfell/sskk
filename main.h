@@ -8,8 +8,8 @@
 typedef struct Objects {
     const char *name; //short name
     const char *desc; //description
-    char *symbol; //tui representation
-    char *floor; //whatever is under the object
+    char symbol[2]; //tui representation
+    char floor[2]; //whatever is under the object
     int xpos; //x position. set to 0 if n/a
     int ypos; //y position. set to 0 if n/a
     struct Objects *loc; //struct of item's location
