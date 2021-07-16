@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "main.h"
 #include "draw.h"
@@ -11,11 +12,16 @@ void move_object(OBJ *object, int x, int y) {
             strncmp(NULLSTR, object->floor, 1) == 0) {
         return;
     }
-    
+    //variable for new floor.
+    char new_floor = mvinch(y, x) & A_CHARTEXT;
+
+    if (check_collision(new_floor) == false) {
+        return;
+    }
+
     //draw the floor over current position
     mvprintw(object->ypos, object->xpos, object->floor);
     //put new floor into variable
-    char new_floor = mvinch(y, x) & A_CHARTEXT;
     object->floor[0] = new_floor;
     //draw object on new location
     mvprintw(y, x, object->symbol);
@@ -39,5 +45,16 @@ void get_map(OBJ *object) {
         mvprintw(4, 0, "------");
     } else {
         return;
+    }
+}
+
+//check collision. returns true (can pass) by default.
+bool check_collision(char c) {
+    switch(c) {
+        case '|':
+        case '-':
+            return false;
+        default:
+            return true;
     }
 }
