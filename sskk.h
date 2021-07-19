@@ -1,9 +1,12 @@
 //sskk.h
 #pragma once
 
+#include <stdbool.h>
+
 struct Actor {
 	int x;
 	int y;
+	int mapcode;
 	char logo[2]; //second is null byte
 	char floor[2]; //second is null byte
 };
