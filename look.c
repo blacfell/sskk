@@ -23,7 +23,12 @@ const char *look_check(char c) {
 			return "wall";
 		case 'o':
 			return "object";
+		case '+':
+			return "door";
+		default:
+			return "something";
 	}
+	write_message("how did you get here??");
 	return "nothing";
 }
 

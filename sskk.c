@@ -31,6 +31,7 @@ bool check_collision(int x, int y) {
 	switch (c) {
 		case '|':
 		case '-':
+		case '+':
 			return false;
 		default:
 			return true;
@@ -45,6 +46,16 @@ void move_actor(struct Actor *act, int x, int y) {
 	//put new x and y into struct
 	act->y = y;
 	act->x = x;
+}
+
+//warp to location
+void warp_to(int to, int dest_x, int dest_y) {
+	player.x = dest_x;
+	player.y = dest_y;
+	player.mapcode = to;
+
+	draw_map(to);
+	move_actor(&player, dest_x, dest_y);
 }
 
 /*** DISPLAY ***/

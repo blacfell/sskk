@@ -15,6 +15,7 @@ extern struct Actor player;
 
 bool check_collision(int x, int y);
 void move_actor(struct Actor *act, int x, int y);
+void warp_to(int to, int dest_x, int dest_y);
 void write_message(const char *fmt, ...);
 void clear_message(void);
 void write_status(void);
