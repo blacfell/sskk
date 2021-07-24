@@ -83,9 +83,8 @@ void write_status(void) {
 	attron(A_STANDOUT);
 	move(21, 0);
 	clrtoeol();
-	printw("x: %d, y: %d\tmap: %d"
-			"\titemsize: %d", 
-			player.x, player.y, player.mapcode, sizeof(*inventory));
+	printw("x: %d, y: %d\tmap: %d",
+			player.x, player.y, player.mapcode);
 	attroff(A_STANDOUT);
 }
 
