@@ -1,14 +1,21 @@
-/*
- * maps.c
+/* maps.c
  **********
  * storage for this game's maps. yes, all of this is hard coded. sorry
  */
 
 #include <ncurses.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "sskk.h"
 #include "maps.h"
+#include "item.h"
+
+static void m3_events(int x, int y);
+static void m3_draw_map(void);
+
+static void m2_events(int x, int y);
+static void m2_draw_map(void);
 
 static void m1_events(int x, int y);
 static void m1_draw_map(void);
@@ -16,14 +23,62 @@ static void m1_draw_map(void);
 static void m0_events(int x, int y);
 static void m0_draw_map(void);
 
+/*** MAP 3 ***/
+
+static void m3_events(int x, int y) {
+	static int times = 0;
+	times++;
+}
+
+static void m3_draw_map(void) {
+	mvprintw(1,  1, "-----     ------");
+	mvprintw(2,  1, "|...|     |....|");
+	mvprintw(3,  1, "--|.|-----|.|---");
+	mvprintw(4,  1, "  |.........|   ");
+	mvprintw(5,  1, "  -----.-----   ");
+	mvprintw(6,  1, "      |.|       ");
+	mvprintw(7,  1, "      |.|       ");
+	mvprintw(8,  1, "  -----.-----   ");
+	mvprintw(9,  1, "  |.........|   ");
+	mvprintw(10, 1, "  |.........|   ");
+	mvprintw(11, 1, "  |.........|   ");
+	mvprintw(12, 1, "  |.........|   ");
+	mvprintw(13, 1, "  -----------   ");
+}
+
+/*** MAP 2 ***/
+
+static void m2_events(int x, int y) {
+	if (x == 5 && y == 12 && search_item("key") == 0) {
+		pick_up((struct Item){"k", "key", "a key you have found."});
+		warp_to(3, 5, 12);
+		player.floor[0] = '.';
+	}
+}
+
+static void m2_draw_map(void) {
+	mvprintw(1,  1, "-----     ------");
+	mvprintw(2,  1, "|...|     |....|");
+	mvprintw(3,  1, "--|.|-----|.|---");
+	mvprintw(4,  1, "  |.........|   ");
+	mvprintw(5,  1, "  -----.-----   ");
+	mvprintw(6,  1, "      |.|       ");
+	mvprintw(7,  1, "      |.|       ");
+	mvprintw(8,  1, "  -----.-----   ");
+	mvprintw(9,  1, "  |.........|   ");
+	mvprintw(10, 1, "  |.........|   ");
+	mvprintw(11, 1, "  |.........|   ");
+	mvprintw(12, 1, "  |.k.......|   ");
+	mvprintw(13, 1, "  -----------   ");
+}
+
 /*** MAP 1 ***/
 
 static void m1_events(int x, int y) {
-	static int turns = 0;
 	if (x == 12 && y == 4) {
-		write_message("it seems that there is a door in the way.");
+		warp_to(2, 12, 4);
+		write_message("maybe you are missing something.");
 	}
-	turns++;
 }
 
 static void m1_draw_map(void) {
@@ -71,6 +126,11 @@ void check_events(int mapcode, int x, int y) {
 		case 1:
 			m1_events(x, y);
 			break;
+		case 2:
+			m2_events(x, y);
+			break;
+		case 3:
+			m3_events(x, y);
 		default:
 			break;
 	}
@@ -85,6 +145,12 @@ void draw_map(int mapcode) {
 			break;
 		case 1:
 			m1_draw_map();
+			break;
+		case 2:
+			m2_draw_map();
+			break;
+		case 3:
+			m3_draw_map();
 			break;
 		default:
 			write_message("error in draw_map: invalid mapcode");

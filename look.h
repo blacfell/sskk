@@ -1,3 +1,4 @@
+//look.h
 #pragma once
 
 const char *look_check(char c);

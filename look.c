@@ -1,5 +1,4 @@
-/*
- * look.c
+/* look.c
  **********
  * help the player identity things
  */
@@ -25,6 +24,8 @@ const char *look_check(char c) {
 			return "object";
 		case '+':
 			return "door";
+		case 'k':
+			return "keys";
 		default:
 			return "something";
 	}

@@ -13,6 +13,7 @@
 #include "sskk.h"
 #include "maps.h"
 #include "look.h"
+#include "item.h"
 
 static int get_input(void);
 static void refresh_game(void);
@@ -82,7 +83,9 @@ void write_status(void) {
 	attron(A_STANDOUT);
 	move(21, 0);
 	clrtoeol();
-	printw("x: %d, y: %d\tmap: %d", player.x, player.y, player.mapcode);
+	printw("x: %d, y: %d\tmap: %d"
+			"\titemsize: %d", 
+			player.x, player.y, player.mapcode, sizeof(*inventory));
 	attroff(A_STANDOUT);
 }
 
@@ -155,6 +158,8 @@ static int init_game(void) {
 	intrflush(stdscr, FALSE);
 	keypad(stdscr, TRUE);
 	curs_set(0);
+
+	init_inventory();
 
 	write_message("welcome to sskk");
 	draw_map(0);
