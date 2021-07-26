@@ -7,8 +7,8 @@
 #include <ncurses.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdarg.h>
-#include <errno.h>
 
 #include "sskk.h"
 #include "maps.h"
@@ -61,6 +61,20 @@ void warp_to(int to, int dest_x, int dest_y) {
 
 /*** DISPLAY ***/
 
+//display list of items
+void inventory_list(void) {
+	attron(A_STANDOUT);
+	for (int i = 0; i < BAGSIZE; i++) {
+		if (strcmp(inventory[i].name, "null"))
+			mvprintw(i+1, 1, inventory[i].name);
+	}
+	attroff(A_STANDOUT);
+	refresh_game();
+	getch();
+	draw_map(player.mapcode);
+	move_actor(&player, player.x, player.y);
+}
+
 //puts a message into the status bar
 void write_message(const char *fmt, ...) {
 	va_list ap;
@@ -112,6 +126,9 @@ static int get_input(void) {
 
 		case ';':
 			look_around(player.x, player.y);
+			break;
+		case 'i':
+			inventory_list();
 			break;
 
 		case 'q':

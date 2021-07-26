@@ -38,6 +38,5 @@ void init_inventory(void) {
 	for (int i = 0; i < BAGSIZE; i++) {
 		strcpy(inventory[i].logo, " ");
 		strcpy(inventory[i].name, "null");
-		strcpy(inventory[i].desc, "null");
 	}
 }

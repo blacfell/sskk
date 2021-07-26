@@ -50,7 +50,7 @@ static void m3_draw_map(void) {
 
 static void m2_events(int x, int y) {
 	if (x == 5 && y == 12 && search_item("key") == 0) {
-		pick_up((struct Item){"k", "key", "a key you have found."});
+		pick_up((struct Item){"k", "key"});
 		warp_to(3, 5, 12);
 		player.floor[0] = '.';
 	}

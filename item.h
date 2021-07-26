@@ -7,7 +7,6 @@ struct Item {
 	char logo[2]; //second is null byte
 	//these are maybe excessively large? i'm not sure.
 	char name[10]; 
-	char desc[80];
 };
 
 extern struct Item inventory[BAGSIZE];
