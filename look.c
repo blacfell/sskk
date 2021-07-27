@@ -56,23 +56,28 @@ void look_around(int inx, int iny) {
 		c = getch();
 		switch (c) {
 			case 'h':
+			case KEY_LEFT:
 				look_move(x - 1, y);
 				x--;
 				break;
 			case 'j':
+			case KEY_DOWN:
 				look_move(x, y + 1);
 				y++;
 				break;
 			case 'k':
+			case KEY_UP:
 				look_move(x, y - 1);
 				y--;
 				break;
 			case 'l':
+			case KEY_RIGHT:
 				look_move(x + 1, y);
 				x++;
 				break;
 
 			case 'q':
+			case 27:
 				curs_set(0);
 				return;
 			default:

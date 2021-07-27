@@ -112,18 +112,33 @@ static int get_input(void) {
 	switch (c) {
 		//should i create a move_player preprocessor directive?
 		case 'h':
+		case KEY_LEFT:
 			move_actor(&player, player.x - 1, player.y);
 			break;
 		case 'j':
+		case KEY_DOWN:
 			move_actor(&player, player.x, player.y + 1);
 			break;
 		case 'k':
+		case KEY_UP:
 			move_actor(&player, player.x, player.y - 1);
 			break;
 		case 'l':
+		case KEY_RIGHT:
 			move_actor(&player, player.x + 1, player.y);
 			break;
-
+		case 'y':
+			move_actor(&player, player.x - 1, player.y - 1);
+			break;
+		case 'u':
+			move_actor(&player, player.x + 1, player.y - 1);
+			break;
+		case 'b':
+			move_actor(&player, player.x - 1, player.y + 1);
+			break;
+		case 'n':
+			move_actor(&player, player.x + 1, player.y + 1);
+			break;
 		case ';':
 			look_around(player.x, player.y);
 			break;
