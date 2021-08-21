@@ -11,6 +11,9 @@
 #include "maps.h"
 #include "item.h"
 
+static void m4_events(int x, int y);
+static void m4_draw_map(void);
+
 static void m3_events(int x, int y);
 static void m3_draw_map(void);
 
@@ -23,11 +26,17 @@ static void m1_draw_map(void);
 static void m0_events(int x, int y);
 static void m0_draw_map(void);
 
+/*** MAP 4 ***/
+
+static void m4_events(int x, int y) {
+}
+
+static void m4_draw_map(void) {
+}
+
 /*** MAP 3 ***/
 
 static void m3_events(int x, int y) {
-	static int times = 0;
-	times++;
 }
 
 static void m3_draw_map(void) {
@@ -131,6 +140,10 @@ void check_events(int mapcode, int x, int y) {
 			break;
 		case 3:
 			m3_events(x, y);
+			break;
+		case 4:
+			m4_events(x, y);
+			break;
 		default:
 			break;
 	}
@@ -151,6 +164,9 @@ void draw_map(int mapcode) {
 			break;
 		case 3:
 			m3_draw_map();
+			break;
+		case 4:
+			m4_draw_map();
 			break;
 		default:
 			write_message("error in draw_map: invalid mapcode");
