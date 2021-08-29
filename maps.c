@@ -1,6 +1,8 @@
 /* maps.c
  **********
- * storage for this game's maps. yes, all of this is hard coded. sorry
+ * yes, all of this is hard coded. sorry
+ * it's all terrible and engulfed in pain. and yet unless i begin again,
+ * it remains my only option
  */
 
 #include <ncurses.h>
@@ -19,6 +21,7 @@ static void m3_draw_map(void);
 
 static void m2_events(int x, int y);
 static void m2_draw_map(void);
+		p
 
 static void m1_events(int x, int y);
 static void m1_draw_map(void);
@@ -26,22 +29,57 @@ static void m1_draw_map(void);
 static void m0_events(int x, int y);
 static void m0_draw_map(void);
 
+/*** MAP 5 ***/
+
+static void m5_events(int x, int y) {
+
+}
+
+static void m5_draw_map(void) {
+	mvprintw(1, 1, "
+}
+
 /*** MAP 4 ***/
 
 static void m4_events(int x, int y) {
+	if (x == 1 && y == 5) {
+		if (search_item("key") == 0)
+			warp_to(3, 14, 2);
+		else
+			warp_to(2, 14, 2);
+	} else if (x == 9 && y == 2) {
+		write_message("The note says: \"ANAK ISIK WAN\"");
+	} else if (x == 16 && y == 5 && search_item("key") == 0) {
+		write_message("The door has been unlocked with the key.");
+		mvprintw(5, 17, ".");
+	}
 }
 
 static void m4_draw_map(void) {
+	mvprintw(1, 1, " ----------------");
+	mvprintw(2, 1, " |......=.......|");
+	mvprintw(3, 1, " |..............|");
+	mvprintw(4, 1, "--..............-----");
+	mvprintw(5, 1, "................+....");
+	mvprintw(6, 1, "--..............-----");
+	mvprintw(7, 1, " |..............|");
+	mvprintw(8, 1, " |..............|");
+	mvprintw(9, 1, " ----------------");
 }
 
 /*** MAP 3 ***/
 
 static void m3_events(int x, int y) {
+	if (x == 15 && y == 2) {
+		warp_to(4, 2, 5);
+	} else if (x == 2 && y == 2) {
+		warp_to(0, 29, 4);
+	}
 }
 
 static void m3_draw_map(void) {
 	mvprintw(1,  1, "-----     ------");
-	mvprintw(2,  1, "|...|     |....|");
+	mvprintw(2,  1, "....|     |.....");
 	mvprintw(3,  1, "--|.|-----|.|---");
 	mvprintw(4,  1, "  |.........|   ");
 	mvprintw(5,  1, "  -----.-----   ");
@@ -58,16 +96,20 @@ static void m3_draw_map(void) {
 /*** MAP 2 ***/
 
 static void m2_events(int x, int y) {
-	if (x == 5 && y == 12 && search_item("key") == 0) {
-		pick_up((struct Item){"k", "key"});
+	if (x == 5 && y == 12 && search_item("key") == 1) {
 		warp_to(3, 5, 12);
+		pick_up((struct Item){"k", "key"});
 		player.floor[0] = '.';
+	} else if (x == 15 && y == 2) {
+		warp_to(4, 2, 5);
+	} else if (x == 2 && y == 2) {
+		warp_to(0, 29, 4);
 	}
 }
 
 static void m2_draw_map(void) {
 	mvprintw(1,  1, "-----     ------");
-	mvprintw(2,  1, "|...|     |....|");
+	mvprintw(2,  1, "....|     |.....");
 	mvprintw(3,  1, "--|.|-----|.|---");
 	mvprintw(4,  1, "  |.........|   ");
 	mvprintw(5,  1, "  -----.-----   ");
@@ -102,15 +144,21 @@ static void m1_draw_map(void) {
 
 static void m0_events(int x, int y) {
 	static int turns = 0;
-	if (turns >= 1 && turns <= 3) {
+	static bool left = false;
+	if (left == true) {
+		write_message("The door has been locked behind you.");
+	} else if (turns >= 1 && turns <= 3) {
 		write_message("where have you ended up now?");
 	} else if (player.floor[0] == 'o') {
 		write_message("this is an Object. the Door is now gone.");
 		mvprintw(4, 20, ".");
 	} else if (y == 4 && x == 21) {
 		write_message("you understand, now, what you need to do.");
-	} else if (y == 4 && x == 30) {
-		warp_to(1, 2, 2);
+	} 
+
+	if (y == 4 && x == 30) {
+		left = true;
+		warp_to(2, 3, 2);
 	}
 	turns++;
 }
@@ -119,7 +167,7 @@ static void m0_draw_map(void) {
 	mvprintw(1, 1, "--------------------");
 	mvprintw(2, 1, "|..................|");
 	mvprintw(3, 1, "|..................|-----------");
-	mvprintw(4, 1, "|...............o..+..........|");
+	mvprintw(4, 1, "|...............o..+...........");
 	mvprintw(5, 1, "|..................|-----------");
 	mvprintw(6, 1, "|..................|");
 	mvprintw(7, 1, "--------------------");
@@ -144,6 +192,9 @@ void check_events(int mapcode, int x, int y) {
 		case 4:
 			m4_events(x, y);
 			break;
+		case 5:
+			m5_events(x, y);
+			break;
 		default:
 			break;
 	}
@@ -167,6 +218,9 @@ void draw_map(int mapcode) {
 			break;
 		case 4:
 			m4_draw_map();
+			break;
+		case 5:
+			m5_draw_map();
 			break;
 		default:
 			write_message("error in draw_map: invalid mapcode");

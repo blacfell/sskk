@@ -62,7 +62,9 @@ void warp_to(int to, int dest_x, int dest_y) {
 /*** DISPLAY ***/
 
 //display list of items
+//i don't remember why i put this here
 void inventory_list(void) {
+	write_message("--INVENTORY-- Press any key to return to game.");
 	attron(A_STANDOUT);
 	for (int i = 0; i < BAGSIZE; i++) {
 		if (strcmp(inventory[i].name, "null"))

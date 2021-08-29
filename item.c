@@ -16,7 +16,7 @@ struct Item inventory[BAGSIZE];
 
 int search_item(const char *query) {
 	for (int i = 0; i < BAGSIZE; i++) {
-		if (strcmp(inventory[i].name, query)) {
+		if (strcmp(inventory[i].name, query) == 0) {
 			return 0;
 		}
 	}

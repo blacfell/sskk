@@ -26,6 +26,8 @@ const char *look_check(char c) {
 			return "door";
 		case 'k':
 			return "keys";
+		case '=':
+			return "note";
 		default:
 			return "something";
 	}
