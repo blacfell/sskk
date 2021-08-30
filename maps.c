@@ -13,30 +13,74 @@
 #include "maps.h"
 #include "item.h"
 
-static void m4_events(int x, int y);
-static void m4_draw_map(void);
+/*** MAP 6 ***/
 
-static void m3_events(int x, int y);
-static void m3_draw_map(void);
+static void m6_events(int x, int y) {
+	static bool revealed_note = false;
+	if (x == 6 && y == 5) {
+		write_message("Pro tip: use <a> to interact with things.");
+	} else if (x == 6 && y == 3) {
+		// what the FUCK is this shit
+		int c = getch();
+		switch (c) {
+			case 'a':
+				mvprintw(2, 6, ".");
+				revealed_note = true;
+				write_message("The button has been pressed down.");
+				break;
+		}
+	} else if (x == 10 && y == 3 && revealed_note == true) {
+		write_message("The note says: \"PAI-TA\".");
+	} else if (x == 10 && y == 3) {
+		write_message("The note says: \"PAI\"");
+	} else if (x == 1 && y == 9) {
+		warp_to(5, 18, 9);
+	}
+}
 
-static void m2_events(int x, int y);
-static void m2_draw_map(void);
-		p
-
-static void m1_events(int x, int y);
-static void m1_draw_map(void);
-
-static void m0_events(int x, int y);
-static void m0_draw_map(void);
+static void m6_draw_map(void) {
+	mvprintw(1,  1, "-----------");
+	mvprintw(2,  1, "|....u....|");
+	mvprintw(3,  1, "|........=|");
+	mvprintw(4,  1, "|.........|");
+	mvprintw(5,  1, "-----.-----");
+	mvprintw(6,  1, "    |.|");
+	mvprintw(7,  1, "    |.|");
+	mvprintw(8,  1, "-----.|");
+	mvprintw(9,  1, "......|");
+	mvprintw(10, 1, "-------");
+}
 
 /*** MAP 5 ***/
 
 static void m5_events(int x, int y) {
-
+	if (x == 1 && y == 2) {
+		warp_to(4, 20, 5);
+	} else if (x == 9 && y == 8) {
+		write_message("The note says: \"ANAK ANAK EI\"");
+	} else if (x == 11 && y == 8) {
+		write_message("The note says: \"ANAK PAI\"");
+	} else if (x == 19 && y == 9) {
+		warp_to(6, 1, 9);
+	}
 }
 
 static void m5_draw_map(void) {
-	mvprintw(1, 1, "
+	mvprintw(1, 1, "------");
+	mvprintw(2, 1, ".....|");
+	mvprintw(3, 1, "----.|");
+	mvprintw(4, 1, "   |.|");
+	mvprintw(5, 1, "   |.|");
+	mvprintw(6, 1, "   |.|");
+	mvprintw(7, 1, "   |.------------");
+	mvprintw(8, 1, "   |....=.=.....|--");
+	mvprintw(9, 1, "   |...............");
+	mvprintw(10, 1,"   |............|--");
+	mvprintw(11, 1,"   |............|");
+	mvprintw(12, 1,"   |............|");
+	mvprintw(13, 1,"   |............|");
+	mvprintw(14, 1,"   |............|");
+	mvprintw(15, 1,"   --------------");
 }
 
 /*** MAP 4 ***/
@@ -52,6 +96,8 @@ static void m4_events(int x, int y) {
 	} else if (x == 16 && y == 5 && search_item("key") == 0) {
 		write_message("The door has been unlocked with the key.");
 		mvprintw(5, 17, ".");
+	} else if (x == 21 && y == 5) {
+		warp_to(5, 2, 2);
 	}
 }
 
@@ -195,6 +241,8 @@ void check_events(int mapcode, int x, int y) {
 		case 5:
 			m5_events(x, y);
 			break;
+		case 6:
+			m6_events(x, y);
 		default:
 			break;
 	}
@@ -221,6 +269,9 @@ void draw_map(int mapcode) {
 			break;
 		case 5:
 			m5_draw_map();
+			break;
+		case 6:
+			m6_draw_map();
 			break;
 		default:
 			write_message("error in draw_map: invalid mapcode");

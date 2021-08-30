@@ -33,6 +33,7 @@ bool check_collision(int x, int y) {
 		case '|':
 		case '-':
 		case '+':
+		case 'u':
 			return false;
 		default:
 			return true;

@@ -28,6 +28,8 @@ const char *look_check(char c) {
 			return "keys";
 		case '=':
 			return "note";
+		case 'u':
+			return "button";
 		default:
 			return "something";
 	}
